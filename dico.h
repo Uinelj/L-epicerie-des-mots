@@ -6,7 +6,7 @@
 
 typedef struct node{
 	char car;
-	struct node *FLC, *FRC; //FirstLeftChild, FirstRightChild
+	struct node *left, *right; //fuckThePolice
 
 
 }*Dictionnary;
@@ -27,5 +27,3 @@ Dictionnary loadDictionnary(Dictionnary);
 void leave();
 
 //"L'Asie est un bretzel, la vie n'est pas un bretzel." - Arthur Rimbaud
-
-
