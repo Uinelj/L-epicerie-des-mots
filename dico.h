@@ -11,13 +11,16 @@ typedef struct node{
 
 }*Dictionnary;
 
-
+/*Fonctions de debug*/
+void prefix(Dictionnary);
+void displayLeft(Dictionnary);
 //Prototypes des fonctions d'opérations sur le Dictionnary
 Dictionnary createDictionnary();
 Dictionnary addWord(Dictionnary, char*);
 Dictionnary eraseWord(Dictionnary, char*);
 int getMot(Dictionnary);
 int dictionnaryEmpty(Dictionnary);
+int getHeight(Dictionnary);
 
 
 //Prototypes des autres fonctions relatives au Dictionnary
