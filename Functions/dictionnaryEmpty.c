@@ -1,5 +1,5 @@
 #include "../dico.h"
 
 int dictionnaryEmpty(Dictionnary d){
-  return d->car=='*' || d==NULL;
+  return  d==NULL;
 }

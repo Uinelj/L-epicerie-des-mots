@@ -9,71 +9,40 @@ Si left-car après currentNode->left, currentNode=currentNode->right;
 Si left->car avant currentNode->left, 'faut foutre leftNode->left dans ->right et mettre le caractere actuel en tant que nouveau left
 */
 Dictionnary addWord(Dictionnary d, char* word){
-  int cur = 0; //curseur vers les lettres du mot
-  Dictionnary currentNode = d; //Pour se deplacer dans l'arbre
-  Dictionnary returnNode = currentNode; //Racine de l'arbre, qu'on return.
-  #if DEBUG>0
-    printf("Mot : %s\n", word);
-  #endif
-  while(word[cur]!='\0'){
-    if(currentNode->left == NULL){
-        #if DEBUG>0
-          printf("left est NULL, on ajoute %c\n", word[cur]);
-        #endif
-        currentNode->car=word[cur];
-        currentNode->left=createDictionnary();
-        currentNode=currentNode->left;
-        cur++;
-    }else{
-      if(word[cur]<currentNode->car){//+petit
-        #if DEBUG>0
-          printf("Le char est plus proche que l'arbre, '%c' nouveau fils gauche", word[cur]);
-        #endif
-        Dictionnary tmp = currentNode;
-        currentNode->car = word[cur];
-        currentNode->left = NULL;
-        currentNode->right = tmp;
-      }
-      // if(word[cur]>currentNode->car){ //lettre plus loin dans l'alphabet
-      //   #if DEBUG>0
-      //     printf("Lettre du mot '%c' plus grande que lettre du noeud '%c', on va voir right.\n", word[cur], currentNode->car);
-      //   #endif
-      //   if(currentNode->right==NULL){
-      //     #if DEBUG>0
-      //       printf("Right est vide, la lettre devient le nouveau right.\n");
-      //     #endif
-      //     currentNode->right = createDictionnary();
-      //     currentNode->right->car = word[cur];
-      //     currentNode = currentNode->right;
-      //   }else{
-      //     #if DEBUG>0
-      //       printf("Right est pas vide et vaut '%c'\n. On va voir le right suivant.", currentNode->car);
-      //     #endif
-      //       currentNode = currentNode->right;
-      //   }
-      //
-      // }
-      // if(word[cur]<currentNode->car){//+petit
-      //   #if DEBUG>0
-      //     printf("Lettre du mot '%c' plus petite que lettre du noeud '%c', on va creer un nouveau left.\n", word[cur], currentNode->car);
-      //   #endif
-      //   Dictionnary newRight = currentNode;//on sauvegarde currentNode
-      //   currentNode->car=word[cur];
-      //   currentNode->left=createDictionnary();
-      //   currentNode->right=newRight;
-      //   currentNode = currentNode->left;
-      //   cur++;
-      // }
-      // if(word[cur]==currentNode->car){ //Si les deux lettres sont egales
-      //   #if DEBUG>0
-      //   printf("Letres identiques, on va dans left.\n");
-      //   #endif
-      //   currentNode = currentNode->left;
-      //   cur++;
-      // }
+  //TODO Ajouter * a la fin du mot.
+  if(word[0] != '\0'){
+    if(NULL == d){
+      d = malloc(sizeof(Dictionnary)); //On alloue la memoire a d.
+      d->car = word[0]; //On y met le premier caractere de la chaine
+      word++; //on enlève le premier caractere de la chaine
+      d->left = addWord(d->left, word); //On fait la meme chose sur le fils droit.
+    }else
+    if(word[0] < d->car){
+      //TODO
+      //printf("W %c T %c", word[0], d->car);
+      char tmp = d->car;
+      d->car = word[0];
+
+      Dictionnary newNode = createDictionnary(); //New 'old' node
+      newNode = malloc(sizeof(Dictionnary));
+      newNode->car = tmp;
+      newNode->left = d->left;
+      newNode->right = d->right;
+      word++;
+      d->right = newNode;
+      d->left = NULL;
+      d->left = addWord(d->left, word);
+      // d->left = addWord(d->left, word) sa marsh pa je c pa pk :/
+
+    }else
+    if(word[0] > d->car){
+      d->right = addWord(d->right, word);
+    }else
+    if(word[0] == d->car){
+
+      word++;
+      d->left = addWord(d->left, word);
     }
   }
-  currentNode->left=createDictionnary();//fin de mot
-  currentNode->car = '*';
-  return returnNode;
+  return d;
 }

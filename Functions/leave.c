@@ -1,2 +1,1 @@
-#include "dico.h"
-
+#include "../dico.h"
