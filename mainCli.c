@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "./Functions/libdico.h"
+#include "./libdico.h"
 
 int main(int argc, char const *argv[]) {
   Dictionnary d = createDictionnary();
