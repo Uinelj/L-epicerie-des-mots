@@ -11,7 +11,7 @@ typedef struct node{
 
 }*Dictionnary;
 
-/*Fonctions de debug*/
+/*debug*/
 void prefix(Dictionnary);
 void displayLeft(Dictionnary);
 //Prototypes des fonctions d'opérations sur le Dictionnary
