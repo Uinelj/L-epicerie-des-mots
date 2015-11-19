@@ -39,12 +39,15 @@ Dictionnary addWord(Dictionnary d, char* word){
       d->right = addWord(d->right, word);
     }else
     if(word[0] == d->car){
-
       word++;
       d->left = addWord(d->left, word);
     }
+  }else{
+    d = malloc(sizeof(Dictionnary));
+    d->car = '*';
+    return d;
   }
-  return d;
+return d;
 }
 Dictionnary createDictionnary(){
   return NULL;
