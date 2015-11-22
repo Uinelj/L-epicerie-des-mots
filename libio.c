@@ -9,6 +9,7 @@ int save(Dictionnary d, char *path){
   }
 
 char *serialize(Dictionnary d){
+  /*Ca serait soin de le faire de la sorte : http://stackoverflow.com/questions/2675756/efficient-array-storage-for-binary-tree */
   char array[6];
   char *pointr = malloc(sizeof(char) * 6);
   char dest[50];
