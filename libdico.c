@@ -75,13 +75,18 @@ void prefix(Dictionnary d){
 
 }
 int getHeight(Dictionnary d){
-  int i=0;
-  Dictionnary cur = d;
-  while(cur->left != NULL){
-    i++;
-    cur = cur->left;
+  if(d == NULL){
+    return -1;
   }
-  return i;
+
+  int left = getHeight(d->left);
+  int right = getHeight(d->right);
+
+  if(left > right){
+    return left+1;
+  }else{
+    return right+1;
+  }
 }
 //displayWord();
 //leave();
