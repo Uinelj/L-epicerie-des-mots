@@ -1,23 +1,46 @@
 #include "libio.h"
-
+#define NULL_MARKER '#'
 int save(Dictionnary d, char *path){
-  FILE *handler = fopen(path, "w");
-  if(handler == NULL){
+  FILE *fp = fopen(path, "w");
+  if(fp == NULL){
     return 1;
   }
+  saveDictionnary(d, fp);
   return 0;
+}
+
+Dictionnary load(Dictionnary d, char *path){
+  FILE *fp = fopen(path, "r");
+  if(fp == NULL){
+    return NULL;
   }
+  loadDictionnary(d, fp);
+  return d;
+}
 
-char *serialize(Dictionnary d){
-  /*Ca serait soin de le faire de la sorte : http://stackoverflow.com/questions/2675756/efficient-array-storage-for-binary-tree */
-  char array[6];
-  char *pointr = malloc(sizeof(char) * 6);
-  char dest[50];
-  /*http://stackoverflow.com/questions/1335786/c-differences-between-char-pointer-and-array*/
+Dictionnary loadDictionnary(Dictionnary d, FILE *fp){
+  char buf;
+  if(d == NULL){
+    d=createDictionnary();
+    d=malloc(sizeof(Dictionnary));
+  }
+  if(!fscanf(fp, "%c", &buf) || buf == '#'){
+    return NULL;
+  }else{
+    d->car = buf;
+    printf("SV: %c\n", d->car);
+    d->left = loadDictionnary(d->left, fp);
+    d->right = loadDictionnary(d->right, fp);
+    return d;
+  }
+}
 
-  strncpy(array, "coucoucoucou", sizeof(array));
-  strncpy(pointr, "coucoucoucou", sizeof(&pointr));
-
-  printf("%s\n", array);
-  printf("%s\n", pointr);
+void saveDictionnary(Dictionnary d, FILE *fp){
+  if(d==NULL){
+    fprintf(fp, "#");
+  }else{
+    fprintf(fp, "%c", d->car);
+    saveDictionnary(d->left, fp);
+    saveDictionnary(d->right, fp);
+  }
 }

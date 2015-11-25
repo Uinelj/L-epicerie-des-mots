@@ -1,5 +1,7 @@
 /*PROJET Dictionnary : "L'épicerie des mots"*/
 /*Prototype des fonctions, include et autres structures*/
+#ifndef LIBDICO_H
+#define LIBDICO_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,8 +27,8 @@ int getHeight(Dictionnary);
 
 //Prototypes des autres fonctions relatives au Dictionnary
 Dictionnary displayDictionnary(Dictionnary);
-Dictionnary saveDictionnary(Dictionnary);
-Dictionnary loadDictionnary(Dictionnary);
 void leave();
 
 //"L'Asie est un bretzel, la vie n'est pas un bretzel." - Arthur Rimbaud
+
+#endif
