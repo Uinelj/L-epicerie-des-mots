@@ -3,6 +3,7 @@
 Stack createStack(){
   return NULL;
 }
+
 Stack push(Stack s, Dictionnary d){
   if(s->dict == NULL){
     s->dict = d;
