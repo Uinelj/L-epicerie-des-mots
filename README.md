@@ -1,6 +1,4 @@
-# L-epicerie-des-mots EXPANSION : WARLORDS OF BARBE EXTENDED EDITION WITH 
-BINOMIAL HEAP DLC AND BARBE SEASON PASS GOLDEN CARD PLATINIUM 
-SUBSCRIPTION
+# L-epicerie-des-mots EXPANSION : WARLORDS OF BARBE EXTENDED EDITION WITH BINOMIAL HEAP DLC AND BARBE SEASON PASS GOLDEN CARD PLATINIUM SUBSCRIPTION
 c 1 epiceri c d mo ^^
 
 ##C KOI LE BUT
@@ -25,7 +23,7 @@ On veut implémenter les deux structures de données que sont le B-Arbre et le T
 		* Supprimer un élément dans un B-Arbre
 		* Afficher le B-Arbre
 		* Plein d'autres fonctions très marrantes
-		
+
 	Dans le deuxième (Tas Binomial) :
 		* Créer un arbre binomial
 		* Insérer une clef dans un arbre binomial
