@@ -148,7 +148,7 @@ int displayBinHeap(binHeap heapHop) {
          printf("\nNothing to extract");
          return x;
       }
-//    int min=x -> key;
+
    p = x;
    while(p -> sibling != NULL) {
      if((p -> sibling)->key < min) {
