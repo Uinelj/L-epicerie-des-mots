@@ -92,3 +92,22 @@ int getHeight(Dictionnary d){
 //leave();
 // loadDictionnary();
 // saveDictionnary();
+int belongs(Dictionnary d, char* word){/*Marche partiellement.*/
+  printf("Lettre courante du dico %c, lettre du mot %c", d->car, word[0]);
+  if(word[0] != '*'){
+    if(d==NULL){
+      return 0;
+    }
+    if(d->car == word[0]){
+      word++;
+      return belongs(d->left, word);
+    }
+    if(word[0] < d->car){
+      return 0;
+    }
+    if(word[0] > d->car){
+      return belongs(d->right, word);
+    }
+  }
+  return d->car == word[0];
+}

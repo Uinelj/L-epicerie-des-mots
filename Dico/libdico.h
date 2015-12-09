@@ -23,7 +23,7 @@ Dictionnary eraseWord(Dictionnary, char*);
 int getMot(Dictionnary);
 int dictionnaryEmpty(Dictionnary);
 int getHeight(Dictionnary);
-
+int belongs(Dictionnary, char*);
 
 //Prototypes des autres fonctions relatives au Dictionnary
 Dictionnary displayDictionnary(Dictionnary);

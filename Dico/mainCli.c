@@ -9,11 +9,13 @@ int main(int argc, char const *argv[]) {
   d = addWord(d, "raloud");
   //printf("%c\n", d->car);
   //printf("%d", save(d, "./test"));
-  Dictionnary e = createDictionnary();
-  e = malloc(sizeof(Dictionnary));
-  e = load(e, "./test");
-  e = addWord(e, "gigagigot");
-  prefix(e);
-  printf("%d\n", save(e, "./test"));
+  // Dictionnary e = createDictionnary();
+  // e = malloc(sizeof(Dictionnary));
+  // e = load(e, "./test");
+  // e = addWord(e, "gigagigot");
+  // e = addWord(e, "caca");
+  // prefix(e);
+  //printf("%d\n", save(e, "./test"));
+  printf("%d\n", belongs(d, "bonjoure*"));
   return 0;
 }
