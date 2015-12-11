@@ -6,6 +6,7 @@ int save(Dictionnary d, char *path){
     return 1;
   }
   saveDictionnary(d, fp);
+  fclose(fp);
   return 0;
 }
 
@@ -15,6 +16,7 @@ Dictionnary load(Dictionnary d, char *path){
     return NULL;
   }
   loadDictionnary(d, fp);
+  fclose(fp);
   return d;
 }
 
