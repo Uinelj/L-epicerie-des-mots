@@ -1,5 +1,4 @@
 #Makefile du projet : "L'épicerie des mots"
-#Le Makefile fonctionne par contre il y a une segfault quand je ./epicerieDesMots :(((((((
 
 all : epicerieDesMots
 
