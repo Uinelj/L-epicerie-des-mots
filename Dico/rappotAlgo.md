@@ -2,10 +2,10 @@
 
 ## But du projet
 
-Ecrire un un dictionnaire en C c'est à dire un programme permettant de stocker
-et chercher des mots.
+Ecrire un un dictionnaire en C, c'est à dire un programme permettant de stocker
+et chercher des mots, en utilisant un arbre n-aire, modélisé par un arbre binaire de recherche.
 
-On doit pouvoir disposer des fonctionnalitées suivantes :
+On doit pouvoir disposer des fonctionnalités suivantes :
 
 *   Ajout d'un mot
 *   Suppression d'un mot
@@ -13,24 +13,24 @@ On doit pouvoir disposer des fonctionnalitées suivantes :
 *   Sauvegarde du dictionnaire dans un fichier
 *   Restitution d'un dictionnaire à partir d'un fichier
 *   Quitter le programme
-
 ## Code
 
 ### *libdico.c*
+
+`libdico.c` contient les fonctions de manipulation du dictionnaire.
 
 ```c
 #include "./libdico.h"
 #define DEBUG 1
 /*
-Algo grossier :
+Algo  :
 
 Check lettre par lettre :
 Si left->car = word[c], c++ et currentNode = currentNode->left;
 Si left-car après currentNode->left, currentNode=currentNode->right;
-Si left->car avant currentNode->left, 'faut foutre leftNode->left dans ->right et mettre le caractere actuel en tant que nouveau left
+Si left->car avant currentNode->left, 'faut mettre leftNode->left dans ->right et mettre le caractere actuel en tant que nouveau left
 */
 Dictionnary addWord(Dictionnary d, char* word){
-  //TODO Ajouter * a la fin du mot.
   if(word[0] != '\0'){
     if(NULL == d){
       d = malloc(sizeof(Dictionnary)); //On alloue la memoire a d.
@@ -39,8 +39,6 @@ Dictionnary addWord(Dictionnary d, char* word){
       d->left = addWord(d->left, word); //On fait la meme chose sur le fils droit.
     }else
     if(word[0] < d->car){
-      //TODO
-      //printf("W %c T %c", word[0], d->car);
       char tmp = d->car;
       d->car = word[0];
 
@@ -53,7 +51,6 @@ Dictionnary addWord(Dictionnary d, char* word){
       d->right = newNode;
       d->left = NULL;
       d->left = addWord(d->left, word);
-      // d->left = addWord(d->left, word) sa marsh pa je c pa pk :/
 
     }else
     if(word[0] > d->car){
@@ -70,13 +67,14 @@ Dictionnary addWord(Dictionnary d, char* word){
   }
 return d;
 }
+
 Dictionnary createDictionnary(){
   return NULL;
 }
 int dictionnaryEmpty(Dictionnary d){
   return  d==NULL;
 }
-void displayLeft(Dictionnary d){
+void displayLeft(Dictionnary d){ //Retourne le mot le plus "à gauche"
   Dictionnary cur = d;
   int i=0;
   while(cur->right != NULL ){
@@ -85,7 +83,7 @@ void displayLeft(Dictionnary d){
     i++;
   }
 }
-void prefix(Dictionnary d){
+void prefix(Dictionnary d){ //Parcours préfixe du dictionnaire
    printf("%c\n", d->car);
   if(d->left!=NULL){
     prefix(d->left);
@@ -109,11 +107,8 @@ int getHeight(Dictionnary d){
     return right+1;
   }
 }
-//displayWord();
-//leave();
-// loadDictionnary();
-// saveDictionnary();
-int belongs(Dictionnary d, char* word){
+
+int belongs(Dictionnary d, char* word){ //Voit si un mot appartient ou non au dictionnaire.
   printf("Lettre courante du dico %c, lettre du mot %c", d->car, word[0]);
   if(word[0] != '*'){
     if(d==NULL){
@@ -148,7 +143,7 @@ int belongs(Dictionnary d, char* word){
 
 typedef struct node{
   char car;
-  struct node *left, *right; //fuckThePolice
+  struct node *left, *right;
 
 
 }*Dictionnary;
@@ -159,14 +154,11 @@ void displayLeft(Dictionnary);
 //Prototypes des fonctions d'opérations sur le Dictionnary
 Dictionnary createDictionnary();
 Dictionnary addWord(Dictionnary, char*);
-Dictionnary eraseWord(Dictionnary, char*);
-int getMot(Dictionnary);
 int dictionnaryEmpty(Dictionnary);
 int getHeight(Dictionnary);
 int belongs(Dictionnary, char*);
 
 //Prototypes des autres fonctions relatives au Dictionnary
-Dictionnary displayDictionnary(Dictionnary);
 void leave();
 
 //"L'Asie est un bretzel, la vie n'est pas un bretzel." - Arthur Rimbaud
@@ -176,10 +168,12 @@ void leave();
 
 ### libio.c
 
+`libio.c` contient les fonctions d'input/output, de sauvegarde et de chargement du dictionnaire.
+
 ```c
 #include "libio.h"
 #define NULL_MARKER '#'
-int save(Dictionnary d, char *path){
+int save(Dictionnary d, char *path){ //Sauve l'arbre d dans le path donné
   FILE *fp = fopen(path, "w");
   if(fp == NULL){
     return 1;
@@ -188,7 +182,7 @@ int save(Dictionnary d, char *path){
   return 0;
 }
 
-Dictionnary load(Dictionnary d, char *path){
+Dictionnary load(Dictionnary d, char *path){ //Charge le dictionnaire depuis le fichier
   FILE *fp = fopen(path, "r");
   if(fp == NULL){
     return NULL;
@@ -247,6 +241,8 @@ Dictionnary loadDictionnary(Dictionnary d, FILE *fp);
 
 ### libstack.c
 
+Nous avons pensé à utiliser une pile afin de pouvoir proposer un parcours efficace pour la sauvegarde de l'arbre. Par faute de temps, et la solution optimisée n'étant pas fonctionnelle, celle-ci n'a pas été utilisée.
+
 ```c
 
 #include "libstack.h"
@@ -295,28 +291,62 @@ Stack pop(Stack s);
 
 ### mainCli.c
 
+Le menu est codé ici.
+
 ```c
 
 #include <stdio.h>
-#include "./libstack.h"
-#include "./libdico.h"
-#include "./libio.h"
-int main(int argc, char const *argv[]) {
-  Dictionnary d = createDictionnary();
-  d = addWord(d, "bonjour");
-  d = addWord(d, "bonsoir");
-  d = addWord(d, "raloud");
-  //printf("%c\n", d->car);
-  //printf("%d", save(d, "./test"));
-  // Dictionnary e = createDictionnary();
-  // e = malloc(sizeof(Dictionnary));
-  // e = load(e, "./test");
-  // e = addWord(e, "gigagigot");
-  // e = addWord(e, "caca");
-  // prefix(e);
-  //printf("%d\n", save(e, "./test"));
-  printf("%d\n", belongs(d, "bonjoure*"));
-  return 0;
+#include "libdico.h"
+#include "libio.h"
+
+int main(){
+	Dictionnary d = createDictionnary();
+	d = malloc(sizeof(Dictionnary));
+	//d = addWord(d, "vomi");
+	//d = addWord(d, "relent");
+	//prefix(d);
+	while(1){
+		char word[20];
+		int choice;
+		printf("1Ajouter mot\n2Afficher contenu du dico\n3Testerl'appartenance d'un mot\n4Vider le dico\n5Sauvegarder contenu dico dans un fichier\n6Charger un dico à partir d'un fichier\n7QUITTER\n");
+
+		scanf("%d", &choice);
+		switch(choice){
+			case 1:
+				scanf("%s", word);
+				d = addWord(d, word);
+				printf("cbon\n");
+				break;
+			case 2:
+				if((d==NULL) || (d->car=='*')){
+					printf("le tableau il est vide\n");
+				}else{
+				prefix(d);}
+				break;
+			case 3:
+				scanf("%s", word);
+				//strcpy(word, "*");
+				printf("%d", belongs(d, word));
+				break;
+			case 4:
+				d->car='*';
+				d->left = d->right = NULL;
+			case 5:
+				//scanf("%s", word);
+				save(d, "./test");
+				printf("Le dico est save ++\n");
+				//return 0;
+				break;
+			case 6:
+				load(d, "./test");
+				break;
+			case 7:
+				return 0;
+			default:
+				return 0;		
+		}
+
+	}
 }
 
 ```
@@ -350,3 +380,5 @@ clean:
 ```
 
 ## Problèmes rencontrés
+
+Nous avous éprouvé des difficultés sur la suppression des mots, ce pourquoi cette fonction n'a au final pas été implémentée. Nous avons passé du temps à essayer d'optimiser les algorithmes et à les réfléchir, ce qui a eu pour conséquence de nous prendre de court. Le projet Dictionnaire a été un des plus complexes des trois, car les algorithmes étaient à adapter afin de pouvoir implémenter les arbres n-aires à l'aide d'arbres binaires de recherche.
