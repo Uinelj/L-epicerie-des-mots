@@ -46,3 +46,5 @@ void saveDictionnary(Dictionnary d, FILE *fp){
     saveDictionnary(d->right, fp);
   }
 }
+
+//"Quand une femme change de coiffure, elle change de coiffure." - Aristide Dupont
