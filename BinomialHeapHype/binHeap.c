@@ -254,4 +254,4 @@ binHeap findNode(binHeap heapHop, int k) {
 return p;
 }
 
-// "Le 'master theorem' de la vie c'est mon chibre" -Freud
+// "Le 'master theorem' de la vie c'est mon climatiseur" -Freud

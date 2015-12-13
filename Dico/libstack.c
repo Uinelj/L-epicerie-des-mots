@@ -18,3 +18,5 @@ Stack push(Stack s, Dictionnary d){
 Stack pop(Stack s){
   return s->nxt;
 }
+
+// "Les roses noires sont du jus de tomate." - Herbert von Herbert
